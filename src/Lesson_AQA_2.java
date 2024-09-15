@@ -2,18 +2,18 @@ import java.util.Arrays;
 
 public class Lesson_AQA_2 {
     public static void main(String[] args) {
-        //printThreeWords();
-        //checkSumSing();
-        //printColor();
-        //compareNumbers();
-        //System.out.println(limitsSum(17,8));
-        //System.out.println(typeNumber(8));
-        //printLine("Уже слишком поздно", 3);
-        //System.out.println(leapYear(100));
-        //mutableArray();
-        //newArray();
-        //changeArray();
-        //squareArray();
+        printThreeWords();
+        checkSumSing();
+        printColor();
+        compareNumbers();
+        System.out.println(limitsSum(17,8));
+        System.out.println(typeNumber(8));
+        printLine("Уже слишком поздно", 3);
+        System.out.println(leapYear(100));
+        mutableArray();
+        newArray();
+        changeArray();
+        squareArray();
         System.out.println(Arrays.toString(initValueArray(8, 16)));
     }
     public static void printThreeWords(){
@@ -22,7 +22,7 @@ public class Lesson_AQA_2 {
     public static void checkSumSing(){
         int a = 5;
         int b = -17;
-        if (a+b >= 0) {
+        if ( a+b >= 0) {
             System.out.println("Сумма положительная");
         } else {
             System.out.println("Сумма отрицательная");
