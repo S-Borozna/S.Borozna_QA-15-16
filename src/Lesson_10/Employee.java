@@ -1,13 +1,13 @@
 package Lesson_10;
 
 public class Employee {
-    String firstName;
-    String lastName;
-    String jobTitle;
-    String email;
-    int phone;
-    int salary;
-    int age;
+    private String firstName;
+    private String lastName;
+    private String jobTitle;
+    private String email;
+    private int phone;
+    private int salary;
+    private int age;
 
     public Employee(String firstName, String lastName, String jobTitle, String email, int phone, int salary, int age) {
         this.firstName = firstName;

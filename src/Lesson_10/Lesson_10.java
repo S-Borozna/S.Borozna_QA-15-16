@@ -13,5 +13,8 @@ public class Lesson_10 {
                 "TinaLes@gmail.com", 2226677, 18000, 22);
         employeesArray[4] = new Employee("Polina", "Klonova", "Cook",
                 "KlonPol@gmail.com", 1116677, 9500, 26);
+        Park park1 = new Park();
+        Park.Attractions kolobok = new Park.Attractions("kolobok","09.00-21.00",150f);
+        System.out.println(kolobok.getOpeningHours());
     }
 }
