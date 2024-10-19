@@ -15,7 +15,7 @@ public class Lesson_14 {
 
     public static void main(String[] args) {
         Lesson_14 calculator = new Lesson_14();
-        int num = 7;
+        int num = 6;
         System.out.println("Факториал числа " + num + " равен " + calculator.factorialCalculator(num));
     }
 }

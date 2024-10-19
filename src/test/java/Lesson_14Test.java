@@ -1,29 +1,33 @@
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 public class Lesson_14Test {
     Lesson_14 calculator = new Lesson_14();
 
     @Test
+    @DisplayName("Проверка факториала числа 0")
     public void testFactorialForZero() {
-        Assert.assertEquals(calculator.factorialCalculator(0), 1);
+        Assertions.assertEquals(calculator.factorialCalculator(0), 1);
     }
 
     @Test
+    @DisplayName("Проверка факториала числа 1")
     public void testFactorialForOne() {
-        Assert.assertEquals(calculator.factorialCalculator(1), 1);
+        Assertions.assertEquals(calculator.factorialCalculator(1), 1);
     }
 
     @Test
     public void testFactorialForPositiveNumber() {
-        Assert.assertEquals(calculator.factorialCalculator(7), 5040);
+        Assertions.assertEquals(calculator.factorialCalculator(7), 5040);
     }
 
     @Test
+    @DisplayName("Проверка факториала отрицательного числа")
     public void testFactorialForNegativeNumber() {
         try {
             calculator.factorialCalculator(-1);
-            Assert.fail("Ожидалось IllegalArgumentException для отрицательного числа");
+            Assertions.fail("Ожидалось IllegalArgumentException для отрицательного числа");
         } catch (IllegalArgumentException ignored) {
         }
     }
