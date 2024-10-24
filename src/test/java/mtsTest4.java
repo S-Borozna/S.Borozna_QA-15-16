@@ -13,8 +13,6 @@ public class mtsTest4 {
     @Test
     @DisplayName("Проверка работоспособности кнопки 'Продолжить'")
     public void testBtnContinue() {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\Svetlana\\Downloads\\chromedriver-win64\\" +
-                "chromedriver-win64\\chromedriver.exe");
         WebDriver driver = new ChromeDriver();
         driver.get("https://www.mts.by/");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -31,7 +29,7 @@ public class mtsTest4 {
 
         Assertions.assertFalse(x.isDisplayed(), "Кнопка продолжить не открыла модальное окно оплаты");
 
-
+        driver.manage().deleteAllCookies();
         driver.close();
     }
 }

@@ -13,13 +13,11 @@ class mtsTest123 {
     public static MtsMainPage mtsMainPage;
     public static WebDriver driver;
 
-    @BeforeAll
-    public static void setup() {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\Svetlana\\Downloads\\chromedriver-win64\\" +
-                "chromedriver-win64\\chromedriver.exe");
+    @BeforeEach
+    public void setup() {
         driver = new ChromeDriver();
         mtsMainPage = new MtsMainPage(driver);
-        driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         driver.get("https://www.mts.by/");
     }
@@ -50,8 +48,9 @@ class mtsTest123 {
     }
 
 
-    @AfterAll
-    public static void tearDown() {
+    @AfterEach
+    public void tearDown() {
+        driver.manage().deleteAllCookies();
         driver.close();
         driver.quit();
     }
