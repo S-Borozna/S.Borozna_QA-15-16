@@ -2,14 +2,13 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 class MtsTest {
@@ -22,6 +21,7 @@ class MtsTest {
     public void setup() {
         driver = new ChromeDriver();
         mtsMainPage = new MtsMainPage(driver);
+        bepaidIframePage = new BepaidIframePage(driver);
         driver.manage().window().maximize();
         driver.get("https://www.mts.by/");
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
@@ -38,17 +38,19 @@ class MtsTest {
     @Test
     @DisplayName("Проверка наличия логотипов платёжных систем")
     public void testPaymentSystemLogos() {
-        List<WebElement> logos = new ArrayList<>(Arrays.asList(mtsMainPage.logoVisa, mtsMainPage.logoBelcard,
-                mtsMainPage.logoMasterCard, mtsMainPage.logoMasterSecCode, mtsMainPage.logoVerByVisa));
-        Assertions.assertFalse(logos.isEmpty(), "Логотипы платёжных систем отстутсвуют");
+        ArrayList <Boolean >logos = new ArrayList<>(Arrays.asList(mtsMainPage.getLogoVisa(), mtsMainPage.getLogoBelcard(),
+                mtsMainPage.getLogoMasterCard(), mtsMainPage.getLogoMasterSecCode(), mtsMainPage.getLogoVerByVisa()));
+        for (Boolean logo : logos) {
+            Assertions.assertTrue(logo, "Логотип платёжной системы отсутствует");
+        }
     }
 
     @Test
     @DisplayName("Проверка работоспособности ссылки 'Подробнее о сервисе'")
     public void testAboutService() {
-        mtsMainPage.abServise();
+        mtsMainPage.getAboutServise();
         Assertions.assertEquals("https://www.mts.by/help/poryadok-oplaty-i-bezopasnost-internet-platezhey/",
-                driver.getCurrentUrl(), "Ссылка 'Подробнее о сервисе' не открывает ожидаемую старницу");
+                driver.getCurrentUrl(), "Ссылка 'Подробнее о сервисе' не открывает ожидаемую страницу");
     }
 
     @Test
@@ -56,6 +58,7 @@ class MtsTest {
     public void testBtnContinue() {
         mtsMainPage.sK("297777777", "29");
         wait.until(driver1 -> driver.switchTo().frame(2));
+        wait.until(ExpectedConditions.visibilityOfAllElements(mtsMainPage.getPaymentWindow()));
         Assertions.assertTrue(mtsMainPage.disPaymentWindow(), "Кнопка продолжить не открыла окно оплаты");
     }
 
@@ -63,11 +66,11 @@ class MtsTest {
     @DisplayName("Проверка наличия плэйсхолдера в полях для оплаты 'Услуги связи'")
     public void testCommunicationServices() {
         Assertions.assertEquals("Номер телефона", mtsMainPage.placeNumber(),
-                "Плэйсхолдер поля 'номер телефона' не соответсвует ожидаемому.");
+                "Плэйсхолдер поля 'номер телефона' не соответствует ожидаемому.");
         Assertions.assertEquals("Сумма", mtsMainPage.placeSum(),
-                "Плэйсхолдер поля 'сумма' не соответсвует ожидаемому.");
+                "Плэйсхолдер поля 'сумма' не соответствует ожидаемому.");
         Assertions.assertEquals("E-mail для отправки чека", mtsMainPage.placeEmail(),
-                "Плэйсхолдер поля 'E-mail' не соответсвует ожидаемому.");
+                "Плэйсхолдер поля 'E-mail' не соответствует ожидаемому.");
     }
 
     @Test
@@ -75,11 +78,11 @@ class MtsTest {
     public void testHomeInternet() {
         mtsMainPage.getHomeInternet();
         Assertions.assertEquals("Номер абонента", mtsMainPage.placeNumHomeInter(),
-                "Плэйсхолдер поля 'номер абонента' не соответсвует ожидаемому.");
+                "Плэйсхолдер поля 'номер абонента' не соответствует ожидаемому.");
         Assertions.assertEquals("Сумма", mtsMainPage.placeSumHomeInter(),
-                "Плэйсхолдер поля 'сумма' не соответсвует ожидаемому.");
+                "Плэйсхолдер поля 'сумма' не соответствует ожидаемому.");
         Assertions.assertEquals("E-mail для отправки чека", mtsMainPage.placeEmailHomeInter(),
-                "Плэйсхолдер поля 'E-mail' не соответсвует ожидаемому.");
+                "Плэйсхолдер поля 'E-mail' не соответствует ожидаемому.");
     }
 
     @Test
@@ -87,11 +90,11 @@ class MtsTest {
     public void testInstallmentPlan() {
         mtsMainPage.getInstallmentPlan();
         Assertions.assertEquals("Номер счета на 44", mtsMainPage.placeNumInstalPlan(),
-                "Плэйсхолдер поля 'номер абонента' не соответсвует ожидаемому.");
+                "Плэйсхолдер поля 'номер абонента' не соответствует ожидаемому.");
         Assertions.assertEquals("Сумма", mtsMainPage.placeSumInstalPlan(),
-                "Плэйсхолдер поля 'сумма' не соответсвует ожидаемому.");
+                "Плэйсхолдер поля 'сумма' не соответствует ожидаемому.");
         Assertions.assertEquals("E-mail для отправки чека", mtsMainPage.placeEmailInstalPlan(),
-                "Плэйсхолдер поля 'E-mail' не соответсвует ожидаемому.");
+                "Плэйсхолдер поля 'E-mail' не соответствует ожидаемому.");
     }
 
     @Test
@@ -99,11 +102,11 @@ class MtsTest {
     public void testDebt() {
         mtsMainPage.getDebt();
         Assertions.assertEquals("Номер счета на 2073", mtsMainPage.placeNumDebt(),
-                "Плэйсхолдер поля 'номер абонента' не соответсвует ожидаемому.");
+                "Плэйсхолдер поля 'номер абонента' не соответствует ожидаемому.");
         Assertions.assertEquals("Сумма", mtsMainPage.placeSumDebt(),
-                "Плэйсхолдер поля 'сумма' не соответсвует ожидаемому.");
+                "Плэйсхолдер поля 'сумма' не соответствует ожидаемому.");
         Assertions.assertEquals("E-mail для отправки чека", mtsMainPage.placeEmailDebt(),
-                "Плэйсхолдер поля 'E-mail' не соответсвует ожидаемому.");
+                "Плэйсхолдер поля 'E-mail' не соответствует ожидаемому.");
     }
 
     @ParameterizedTest
@@ -112,18 +115,18 @@ class MtsTest {
     public void testPaymentWindow(String num) {
         mtsMainPage.sK(num, "29");
         wait.until(driver1 -> driver.switchTo().frame(2));
-        bepaidIframePage = new BepaidIframePage(driver);
+        wait.until(ExpectedConditions.visibilityOfAllElements(mtsMainPage.getPaymentWindow()));
         Assertions.assertTrue(bepaidIframePage.getNumber().contains(num), "Введенный номер телефона не отображается");
         Assertions.assertTrue(bepaidIframePage.getSumma().contains("29"), "Введенная сумма не отображается");
         Assertions.assertTrue(bepaidIframePage.getBtnPay().contains("29"), "Введенная сумма не отображается на кнопке оплаты");
         Assertions.assertEquals("Номер карты", bepaidIframePage.getNumCard(),
-                "Текст поля 'Номер карты' не соответсвует ожидаемому.");
+                "Текст поля 'Номер карты' не соответствует ожидаемому.");
         Assertions.assertEquals("Срок действия", bepaidIframePage.getValidityPeriod(),
-                "Текст поля 'Срок действия' не соответсвует ожидаемому.");
+                "Текст поля 'Срок действия' не соответствует ожидаемому.");
         Assertions.assertEquals("CVC", bepaidIframePage.getCvc(),
-                "Текст поля 'CVC' не соответсвует ожидаемому.");
+                "Текст поля 'CVC' не соответствует ожидаемому.");
         Assertions.assertEquals("Имя держателя (как на карте)", bepaidIframePage.getHolderName(),
-                "Текст поля 'Имя держателя' не соответсвует ожидаемому.");
+                "Текст поля 'Имя держателя' не соответствует ожидаемому.");
         Assertions.assertTrue(bepaidIframePage.getVisaLogo(), "Логотип Visa не отображается");
         Assertions.assertTrue(bepaidIframePage.getMasterCardLogo(), "Логотип MasterCard не отображается");
         Assertions.assertTrue(bepaidIframePage.getBelcartLogo(), "Логотип Белкаре не отображается");
