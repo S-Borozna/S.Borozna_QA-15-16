@@ -11,37 +11,37 @@ public class MtsMainPage {
         this.driver = driver;
     }
 
-    @FindBy(xpath = "(//*[@id=\"pay-section\"]//h2)[1]")
+    @FindBy(xpath = "//*[@id=\"pay-section\"]//section/div/h2")
     private WebElement blockName;
 
     @FindBy(xpath = "//*[@alt=\"Verified By Visa\"]")
-    public WebElement logoVerByVisa;
+    private WebElement logoVerByVisa;
 
-    @FindBy(xpath = "(//*[@alt=\"MasterCard\"])[1]")
-    public WebElement logoMasterCard;
+    @FindBy(xpath = "//main//*[@alt=\"MasterCard\"]")
+    private WebElement logoMasterCard;
 
     @FindBy(xpath = "//*[@alt=\"MasterCard Secure Code\"]")
-    public WebElement logoMasterSecCode;
+    private WebElement logoMasterSecCode;
 
-    @FindBy(xpath = "(//*[@alt=\"Белкарт\"])[1]")
-    public WebElement logoBelcard;
+    @FindBy(xpath = "//main//*[@alt=\"Белкарт\"]")
+    private WebElement logoBelcard;
 
     @FindBy(xpath = "//*[@alt=\"Visa\"]")
-    public WebElement logoVisa;
+    private WebElement logoVisa;
 
     @FindBy(xpath = "(//*[@id=\"pay-section\"]//a)[1]")
-    public WebElement btnAbServise;
+    private WebElement btnAbServise;
 
     @FindBy(xpath = "//*[@placeholder=\"Номер телефона\"]")
     private WebElement phoneNumber;
 
-    @FindBy(xpath = "(//*[@type=\"submit\"])[3]")
+    @FindBy(xpath = "//*[@id=\"pay-connection\"]//button")
     private WebElement btnContinue;
 
-    @FindBy(xpath = "(//*[@placeholder=\"Сумма\"])[1]")
+    @FindBy(xpath = "//*[@id=\"pay-connection\"]//*[@placeholder=\"Сумма\"]")
     private WebElement sum;
 
-    @FindBy(xpath = "(//*[@placeholder=\"E-mail для отправки чека\"])[1]")
+    @FindBy(xpath = "//*[@id=\"pay-connection\"]//*[@placeholder=\"E-mail для отправки чека\"]")
     private WebElement email;
 
     @FindBy(xpath = "//*[@id=\"cookie-agree\"]")
@@ -59,10 +59,10 @@ public class MtsMainPage {
     @FindBy(xpath = "//*[@placeholder=\"Номер абонента\"]")
     private WebElement numHomeInter;
 
-    @FindBy(xpath = "(//*[@placeholder=\"Сумма\"])[2]")
+    @FindBy(xpath = "//*[@id=\"pay-internet\"]//*[@placeholder=\"Сумма\"]")
     private WebElement sumHomeInter;
 
-    @FindBy(xpath = "(//*[@placeholder=\"E-mail для отправки чека\"])[2]")
+    @FindBy(xpath = "//*[@id=\"pay-internet\"]//*[@placeholder=\"E-mail для отправки чека\"]")
     private WebElement emailHomeInter;
 
     @FindBy(xpath = "(//*[@id=\"pay-section\"]//p)[3]")
@@ -71,10 +71,10 @@ public class MtsMainPage {
     @FindBy(xpath = "//*[@placeholder=\"Номер счета на 44\"]")
     private WebElement accountNumber;
 
-    @FindBy(xpath = "(//*[@placeholder=\"Сумма\"])[3]")
+    @FindBy(xpath = "//*[@id=\"pay-instalment\"]//*[@placeholder=\"Сумма\"]")
     private WebElement sumInstalPlan;
 
-    @FindBy(xpath = "(//*[@placeholder=\"E-mail для отправки чека\"])[3]")
+    @FindBy(xpath = "//*[@id=\"pay-instalment\"]//*[@placeholder=\"E-mail для отправки чека\"]")
     private WebElement emailInstalPlan;
 
     @FindBy(xpath = "(//*[@id=\"pay-section\"]//p)[4]")
@@ -83,11 +83,35 @@ public class MtsMainPage {
     @FindBy(xpath = "//*[@placeholder=\"Номер счета на 2073\"]")
     private WebElement accountNumberDebt;
 
-    @FindBy(xpath = "(//*[@placeholder=\"Сумма\"])[4]")
+    @FindBy(xpath = "//*[@id=\"pay-arrears\"]//*[@placeholder=\"Сумма\"]")
     private WebElement sumDebt;
 
-    @FindBy(xpath = "(//*[@placeholder=\"E-mail для отправки чека\"])[4]")
+    @FindBy(xpath = "//*[@id=\"pay-arrears\"]//*[@placeholder=\"E-mail для отправки чека\"]")
     private WebElement emailDebt;
+
+    public WebElement getPaymentWindow() {
+        return paymentWindow;
+    }
+
+    public boolean getLogoVisa() {
+        return logoVisa.isDisplayed();
+    }
+
+    public boolean getLogoBelcard() {
+        return logoBelcard.isDisplayed();
+    }
+
+    public boolean getLogoMasterSecCode() {
+        return logoMasterSecCode.isDisplayed();
+    }
+
+    public boolean getLogoMasterCard() {
+        return logoMasterCard.isDisplayed();
+    }
+
+    public boolean getLogoVerByVisa() {
+        return logoVerByVisa.isDisplayed();
+    }
 
     public String placeEmailDebt() {
         return emailDebt.getAttribute("placeholder");
@@ -164,7 +188,7 @@ public class MtsMainPage {
         return blockName.getText();
     }
 
-    public void abServise() {
+    public void getAboutServise() {
         btnAbServise.click();
     }
 

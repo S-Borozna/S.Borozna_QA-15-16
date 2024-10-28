@@ -11,6 +11,7 @@ public class BepaidIframePage {
         this.driver = driver;
     }
 
+
     @FindBy(xpath = "//section//div/div[2]/span")
     private WebElement number;
 
