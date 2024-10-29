@@ -1,3 +1,5 @@
+import io.qameta.allure.Allure;
+import io.qameta.allure.Feature;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -11,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
+@Feature("Тесты связанные с блоком 'Онлайн пополнение без комиссии'")
 class MtsTest {
     public static MtsMainPage mtsMainPage;
     public static BepaidIframePage bepaidIframePage;
@@ -38,7 +41,7 @@ class MtsTest {
     @Test
     @DisplayName("Проверка наличия логотипов платёжных систем")
     public void testPaymentSystemLogos() {
-        ArrayList <Boolean >logos = new ArrayList<>(Arrays.asList(mtsMainPage.getLogoVisa(), mtsMainPage.getLogoBelcard(),
+        ArrayList<Boolean> logos = new ArrayList<>(Arrays.asList(mtsMainPage.getLogoVisa(), mtsMainPage.getLogoBelcard(),
                 mtsMainPage.getLogoMasterCard(), mtsMainPage.getLogoMasterSecCode(), mtsMainPage.getLogoVerByVisa()));
         for (Boolean logo : logos) {
             Assertions.assertTrue(logo, "Логотип платёжной системы отсутствует");
@@ -110,26 +113,37 @@ class MtsTest {
     }
 
     @ParameterizedTest
-    @DisplayName("Окно оплаты")
+    @DisplayName("Проверка корректного отображения окна оплаты")
     @ValueSource(strings = "297777777")
     public void testPaymentWindow(String num) {
         mtsMainPage.sK(num, "29");
         wait.until(driver1 -> driver.switchTo().frame(2));
         wait.until(ExpectedConditions.visibilityOfAllElements(mtsMainPage.getPaymentWindow()));
+        Allure.step("Проверка отображения введенного номера телефона");
         Assertions.assertTrue(bepaidIframePage.getNumber().contains(num), "Введенный номер телефона не отображается");
+        Allure.step("Проверка отображения введенной суммы");
         Assertions.assertTrue(bepaidIframePage.getSumma().contains("29"), "Введенная сумма не отображается");
+        Allure.step("Проверка отображения введенной суммы на кнопке оплаты");
         Assertions.assertTrue(bepaidIframePage.getBtnPay().contains("29"), "Введенная сумма не отображается на кнопке оплаты");
+        Allure.step("Проверка отображения текста в поле 'Номер карты'");
         Assertions.assertEquals("Номер карты", bepaidIframePage.getNumCard(),
                 "Текст поля 'Номер карты' не соответствует ожидаемому.");
+        Allure.step("Проверка отображения текста в поле 'Срок действия'");
         Assertions.assertEquals("Срок действия", bepaidIframePage.getValidityPeriod(),
                 "Текст поля 'Срок действия' не соответствует ожидаемому.");
+        Allure.step("Проверка отображения текста в поле 'CVC'");
         Assertions.assertEquals("CVC", bepaidIframePage.getCvc(),
                 "Текст поля 'CVC' не соответствует ожидаемому.");
+        Allure.step("Проверка отображения текста в поле 'Имя держателя'");
         Assertions.assertEquals("Имя держателя (как на карте)", bepaidIframePage.getHolderName(),
                 "Текст поля 'Имя держателя' не соответствует ожидаемому.");
+        Allure.step("Проверка отображения логотипа Visa");
         Assertions.assertTrue(bepaidIframePage.getVisaLogo(), "Логотип Visa не отображается");
+        Allure.step("Проверка отображения логотипа MasterCard");
         Assertions.assertTrue(bepaidIframePage.getMasterCardLogo(), "Логотип MasterCard не отображается");
-        Assertions.assertTrue(bepaidIframePage.getBelcartLogo(), "Логотип Белкаре не отображается");
+        Allure.step("Проверка отображения логотипа Белкарт");
+        Assertions.assertTrue(bepaidIframePage.getBelcartLogo(), "Логотип Белкарт не отображается");
+        Allure.step("Проверка отображения логотипов МИР и Maestro");
         Assertions.assertTrue(bepaidIframePage.getLogo(), "Логотип не отображается");
     }
 
